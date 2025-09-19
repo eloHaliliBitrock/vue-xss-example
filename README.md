@@ -1,15 +1,22 @@
 # Vue-i18n v9.10 XSS Demo
 
-This project demonstrates an XSS vulnerability in `vue-i18n@9.10` when using `v-html` to render translations containing untrusted HTML.
+### Project created with VS Code chat agent
+
+This project demonstrates an XSS vulnerability in `vue-i18n` (include 9.0.0 ⟶ < 9.14.5, and earlier 10/11 minors) when using `v-html` to render translations containing untrusted HTML.
 
 ## How the XSS Works
 
-- The translation for `welcome` contains a malicious `<img>` tag with an `onerror` handler that triggers `alert('XSS!')`.
+- The app sets a cookie named `secure_token` to simulate a sensitive value (e.g., an auth token).
+- The translation for `welcome` contains a `{name}` parameter, which is set to a value that could come from an external API.
+- In the demo, `name` is set to a malicious payload:
+  ```js
+  const name = `<img src=x onerror=alert('Stolen token: ' + document.cookie)>`;
+  ```
 - The `XssDemo.vue` component renders this translation using `v-html`:
   ```vue
-  <div v-html="$t('welcome')"></div>
+  <div v-html="$t('welcome', { name })"></div>
   ```
-- When the page loads, the malicious code executes, showing an alert.
+- When the page loads, the malicious code executes, reading `document.cookie` and displaying the stolen token in an alert. In a real attack, this could be exfiltrated to a remote server.
 
 ## How to Run
 
