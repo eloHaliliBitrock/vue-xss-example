@@ -1,4 +1,4 @@
-# Vue-i18n v9.10 XSS Demo
+# Vue-i18n XSS Demo
 
 ### Project created with VS Code chat agent
 
