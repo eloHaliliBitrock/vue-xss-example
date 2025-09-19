@@ -10,7 +10,7 @@ This project demonstrates an XSS vulnerability in `vue-i18n` (include 9.0.0 ⟶ 
 - The translation for `welcome` contains a `{name}` parameter, which is set to a value that could come from an external API.
 - In the demo, `name` is set to a malicious payload:
   ```js
-  const name = `<img src=x onerror=alert('Stolen token: ' + document.cookie)>`;
+  const name = `<img src=x onerror=alert(document.cookie)>`;
   ```
 - The `XssDemo.vue` component renders this translation using `v-html`:
   ```vue
