@@ -5,6 +5,7 @@ import App from './App.vue'
 import './assets/main.css'
 
 const messages = {
+    escapeParameterHtml: true,
     en: {
         welcome: 'Welcome, {name}!'
     }
